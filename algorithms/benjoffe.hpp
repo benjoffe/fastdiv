@@ -1,5 +1,9 @@
-#pragma once
-// Ben Joffe's floor division by a constant.
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Ben Joffe <https://www.benjoffe.com/>
+
+// Fast floor division by a constant.
+//
+// See: https://www.benjoffe.com/fast-floordiv
 //
 // Two candidate (multiplier, shift) pairs are searched: round-up
 // (M = ceil(2^S/|D|)) and round-down (M = floor(2^S/|D|)), each with a
@@ -13,6 +17,12 @@
 // the sign-selected variant is used instead (no compare at all):
 //
 //   m = M + (x >> (W-1));   result = (x * m) >> S
+//
+// x86 takes a slightly different path: a clean-shift round-up is not
+// preferred over sign-selected there, as it ties or loses in testing.
+
+#pragma once
+
 #include "algorithms/base.hpp"
 #include "algorithms/trivial.hpp"
 
